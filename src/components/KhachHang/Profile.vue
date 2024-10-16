@@ -7,7 +7,8 @@
                         <h1>
                             <span class="d-block text-danger" style='font-size: 70px; margin-left: 50px;'>Your
                                 Profile</span>
-                            <span class="d-block text-dark" style='font-size: 70px; margin-left: 80px;'> Your Story</span>
+                            <span class="d-block text-dark" style='font-size: 70px; margin-left: 80px;'> Your
+                                Story</span>
                         </h1>
                     </div>
                 </div>
@@ -31,8 +32,8 @@
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false"
-                                tabindex="-1">
+                            <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab"
+                                aria-selected="false" tabindex="-1">
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon"><i class="fa-solid fa-address-book font-18 me-1"></i>
                                     </div>
@@ -41,8 +42,8 @@
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab" aria-selected="false"
-                                tabindex="-1">
+                            <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab"
+                                aria-selected="false" tabindex="-1">
                                 <div class="d-flex align-items-center">
                                     <div class="tab-icon"><i class="fa-solid fa-lock font-18 me-1"></i>
                                     </div>
@@ -71,10 +72,11 @@
                                                     class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
                                                             class="feather feather-instagram me-2 icon-inline text-danger">
-                                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5">
+                                                            </rect>
                                                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z">
                                                             </path>
                                                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -85,8 +87,8 @@
                                                     class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
                                                             class="feather feather-facebook me-2 icon-inline text-primary">
                                                             <path
                                                                 d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
@@ -124,8 +126,8 @@
                                                     <h6 class="mb-0">Phone</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input v-model="profile.so_dien_thoai" type="text" class="form-control"
-                                                        placeholder="Phone">
+                                                    <input v-model="profile.so_dien_thoai" type="text"
+                                                        class="form-control" placeholder="Phone">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -165,6 +167,7 @@
                                             <th>Tên Người Nhận</th>
                                             <th>Số Điện Thoại</th>
                                             <th>Địa Chỉ Giao Hàng</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -177,11 +180,11 @@
                                                         class="btn btn-primary me-1">
                                                         Đang Kiểm Tra
                                                     </button>
-                                                    <button v-if="value.tinh_trang_don_hang == 2"
+                                                    <button v-if="value.tinh_trang_don_hang == 1"
                                                         class="btn btn-warning me-1">
                                                         Đang Vận Chuyển
                                                     </button>
-                                                    <button v-if="value.tinh_trang_don_hang == 3"
+                                                    <button v-if="value.tinh_trang_don_hang == 2"
                                                         class="btn btn-success me-1">
                                                         Đã Giao Hàng
                                                     </button>
@@ -189,6 +192,11 @@
                                                 <td>{{ value.ten_nguoi_nhan }}</td>
                                                 <td>{{ value.so_dien_thoai }}</td>
                                                 <td>{{ value.dia_chi_giao_hang }}</td>
+                                                <td>
+                                                    <button v-on:click="deleteDonHang(value)" class="btn btn-danger">
+                                                        xóa
+                                                    </button>
+                                                </td>
                                             </tr>
                                         </template>
                                     </tbody>
@@ -333,120 +341,85 @@
             </div>
         </div>
     </template>
-    <script>
-    import { createToaster } from "@meforma/vue-toaster";
-    import baseRequest from "../../core/baseRequest";
-    const toaster = createToaster({ position: "top-right" });
-    export default {
-        data() {
-            return {
-                profile: {},
-                update_password: {},
-                create_address: {},
-                List_address: [],
-                update_address: {},
-                delete_address: {},
-                data_order: [],
-            }
+<script>
+import { createToaster } from "@meforma/vue-toaster";
+import baseRequest from "../../core/baseRequest";
+const toaster = createToaster({ position: "top-right" });
+export default {
+    data() {
+        return {
+            profile: {},
+            update_password: {},
+            create_address: {},
+            List_address: [],
+            update_address: {},
+            delete_address: {},
+            data_order: [],
+        }
+    },
+    mounted() {
+        this.getProfile();
+        this.dataOrder();
+        // this.loadDataDiaChi();
+    },
+    methods: {
+        formatToUSD(number) {
+            number = parseInt(number);
+            return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         },
-        mounted() {
-            this.getProfile();
-            this.dataOrder();
-            // this.loadDataDiaChi();
+        dataOrder() {
+            baseRequest
+                .get('profile/thong-tin-don-hang')
+                .then((res) => {
+                    this.data_order = res.data.data
+                })
         },
-        methods: {
-            formatToUSD(number) {
-                number = parseInt(number);
-                return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            },
-            dataOrder() {
-                baseRequest
-                    .get('profile/thong-tin-don-hang')
-                    .then((res) => {
-                        this.data_order = res.data.data
-                    })
-            },
-            getProfile() {
-                baseRequest
-                    .get('khach-hang/thong-tin')
-                    .then((res) => {
-                        this.profile = res.data.data;
-                    })
-            },
-            updateProfile() {
-                baseRequest
-                    .post('khach-hang/updateProfile', this.profile)
-                    .then((res) => {
-                        if (res.data.status) {
-                            toaster.success('Thông Báo<br>' + res.data.message)
-                            this.getProfile();
-                        } else {
-                            toaster.error('Thông Báo<br>' + res.data.message)
-                        }
-                    })
-            },
-            updatePassword() {
-                baseRequest
-                    .post('khach-hang/updatePassword', this.update_password)
-                    .then((res) => {
-                        if (res.data.status) {
-                            toaster.success('Thông Báo<br>' + res.data.message)
-                            this.getProfile();
-                            this.update_password = {}
-                        } else {
-                            toaster.error('Thông Báo<br>' + res.data.message)
-                        }
-                    })
-            },
-            // loadDataDiaChi() {
-            //     baseRequest
-            //         .get('dia-chi/select')
-            //         .then((res) => {
-            //             this.List_address = res.data.data;
-            //         });
-            // },
-            // createDiaChi() {
-            //     baseRequest
-            //         .post('dia-chi/create', this.create_address)
-            //         .then((res) => {
-            //             if (res.data.status) {
-            //                 toaster.success(res.data.message);
-            //                 this.create_address = {};
-            //                 this.loadDataDiaChi();
-            //             } else {
-            //                 toaster.error(res.data.message);
-            //             }
-            //         })
-            // },
+        getProfile() {
+            baseRequest
+                .get('khach-hang/thong-tin')
+                .then((res) => {
+                    this.profile = res.data.data;
+                })
+        },
+        updateProfile() {
+            baseRequest
+                .post('khach-hang/updateProfile', this.profile)
+                .then((res) => {
+                    if (res.data.status) {
+                        toaster.success('Thông Báo<br>' + res.data.message)
+                        this.getProfile();
+                    } else {
+                        toaster.error('Thông Báo<br>' + res.data.message)
+                    }
+                })
+        },
+        updatePassword() {
+            baseRequest
+                .post('khach-hang/updatePassword', this.update_password)
+                .then((res) => {
+                    if (res.data.status) {
+                        toaster.success('Thông Báo<br>' + res.data.message)
+                        this.getProfile();
+                        this.update_password = {}
+                    } else {
+                        toaster.error('Thông Báo<br>' + res.data.message)
+                    }
+                })
+        },
 
-            // updateDiaChi() {
-            //     baseRequest
-            //         .post('dia-chi/updateDiaChi', this.update_address)
-            //         .then((res) => {
-            //             if (res.data.status) {
-            //                 toaster.success(res.data.message);
-            //                 this.update_address = {};
-            //                 this.loadDataDiaChi();
-            //             } else {
-            //                 toaster.error(res.data.message);
-            //             }
-            //         })
-            // },
-
-            // deleteDiaChi() {
-            //     baseRequest
-            //         .post('dia-chi/detroys', this.delete_address)
-            //         .then((res) => {
-            //             if (res.data.status) {
-            //                 toaster.success(res.data.message);
-            //                 this.dia_chi_delete = {};
-            //                 this.loadDataDiaChi();
-            //             } else {
-            //                 toaster.error(res.data.message);
-            //             }
-            //         })
-            // }
-        },
-    }
-    </script>
-    <style></style>
+        deleteDonHang(value) {
+            baseRequest
+                .post('profile/xoa-don-hang', value)
+                .then((res) => {
+                    if (res.data.status) {
+                        toaster.success('Thông Báo<br>' + res.data.message)
+                        this.dataOrder();
+                    } else {
+                        toaster.error('Thông Báo<br>' + res.data.message)
+                    }
+                })
+        }
+    },
+}
+</script>
+<style></style>

@@ -39,7 +39,7 @@
                         </a>
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <router-link to="/admin">
                         <a class="nav-link" href="/admin">
                             <div class="parent-icon"><i class="fa-brands fa-product-hunt"></i>
@@ -47,7 +47,7 @@
                             <div class="menu-title">Danh Mục</div>
                         </a>
                     </router-link>
-                </li>
+                </li> -->
             </ul>
         </nav>
     </div>

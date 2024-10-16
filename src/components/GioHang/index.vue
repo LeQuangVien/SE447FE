@@ -1,9 +1,9 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-9" style="margin-top: -70px;">
+            <div class="col-12" style="margin-top: -70px;">
                 <h4 class="text-center" style="font-size: 40px; color: gray; margin-bottom: 20px;">Giỏ Hàng</h4>
-                <table class="table table-bordered">
+                <table class="table table-hover">
                     <thead>
                         <tr class="text-center">
                             <th></th>
@@ -19,15 +19,15 @@
                     </thead>
                     <tbody>
                         <template v-for="(value, index) in List_shoppingCart" :key="index">
-                            <tr class="align-middle">
+                            <tr class="align-middle" style="height: 185px;">
                                 <td class="align-middle text-center">
                                     <input v-on:change="totalProduct()" v-model="value.chon_sp"
                                         class="form-check-input me-3" type="checkbox" value="" aria-label="...">
                                 </td>
-                                <th>{{ value.id }}</th>
-                                <td><img class="img-fluid" style="width: 100px; height: 100px"
-                                        v-bind:src="value.hinh_anh" alt=""></td>
-                                <td>{{ value.ten_san_pham }}</td>
+                                <th class="align-middle text-center">{{ value.id }}</th>
+                                <td class="align-middle text-center"><img class="img-fluid"
+                                        style="width: 120px; height: 120px" v-bind:src="value.hinh_anh" alt=""></td>
+                                <td class="align-middle text-center">{{ value.ten_san_pham }}</td>
                                 <td style="width: 140px;" class="align-middle">
                                     <div class="input-group input-spinner d-flex justify-content-center flex-row"
                                         style="flex-wrap: nowrap;">
@@ -43,16 +43,16 @@
                                     <div class="input-group input-spinner d-flex justify-content-center flex-row"
                                         style="flex-wrap: nowrap;">
                                         <button v-on:click="value.size--; updateShoppingCart(value)"
-                                            class="btn btn-dark" type="button" id="button-minus"> − </button>
+                                            class="btn btn-dark" id="button-minus"> − </button>
                                         <input v-model="value.size" v-on:keyup="updateShoppingCart(value)" type="text"
                                             class="form-control text-center">
                                         <button v-on:click="value.size++; updateShoppingCart(value)"
                                             class="btn btn-dark" type="button" id="button-plus"> + </button>
                                     </div>
                                 </td>
-                                <td>{{ value.don_gia }}$</td>
-                                <td>{{ value.thanh_tien }}$</td>
-                                <td>
+                                <td class="align-middle text-center">{{ formatToUSD(value.don_gia) }}$</td>
+                                <td class="align-middle text-center">{{ formatToUSD(value.thanh_tien) }}$</td>
+                                <td class="align-middle text-center">
                                     <div>
                                         <button v-on:click="deleteShoppingCart(value)"
                                             class="btn btn-danger me-3">Xóa</button>
@@ -65,7 +65,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-3">
+            <div class="col-8">
+            </div>
+            <div class="col-lg-4">
                 <div class="card tongtien" style="background-color: gainsboro;">
                     <div class="card-header">
                         <div class="title-thanhToan">

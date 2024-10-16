@@ -14,42 +14,44 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr class="text-center align-middle">
                                     <th>#</th>
                                     <th>Tên Sản Phẩm</th>
-                                    <th>Danh Mục</th>
                                     <th>Hình Ảnh</th>
                                     <th>Mô tả</th>
                                     <th>Số Lượng Nhập</th>
                                     <th>Giá Bán</th>
                                     <th>Giá Khuyến Mãi</th>
-                                    <th>Tình trạng</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <th class="align-middle text-nowrap text-center">1</th>
-                                <td class="align-middle text-nowrap">Tên Sản Phẩm</td>
-                                <td class="align-middle text-nowrap">Danh Mục</td>
-                                <td class="align-middle text-center">
-                                    <img src="" class="img-fluid" style="height: 100px; width: 100%;" alt="">
-                                </td>
-                                <td class="align-middle text-nowrap">Mô Tả Ngắn</td>
-                                <td class="align-middle text-nowrap text-center">Số Lượng</td>
-                                <td class="align-middle text-nowrap text-end">Giá Bán</td>
-                                <td class="align-middle text-nowrap text-end">Giá Khuyến Mãi</td>
-                                <td class="align-middle text-nowrap text-center">
-                                    <button class="btn btn-success">Hoạt Động</button>
-                                </td>
-                                <td class="align-middle text-nowrap text-center">
-                                    <button class="btn btn-primary me-2" data-bs-toggle="modal"
-                                        data-bs-target="#capNhatmodal">Cập Nhật</button>
-                                    <button class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#xoaModal">Xóa</button>
-                                </td>
+                                <template v-for="(value, index) in list_products" :key="index">
+                                    <tr>
+                                        <th class="align-middle text-center">{{ index + 1 }}</th>
+                                        <td class="align-middle">{{ value.ten_san_pham }}</td>
+                                        <td class="align-middle text-center">
+                                            <img v-bind:src="value.hinh_anh" class="img-fluid"
+                                                style="height: 100px; width: 100%;" alt="">
+                                        </td>
+                                        <td class="align-middle">{{ value.mo_ta_ngan }}</td>
+                                        <td class="align-middle text-center">{{ value.so_luong }}</td>
+                                        <td class="align-middle text-center">{{ value.gia_ban }}</td>
+                                        <td class="align-middle text-center">{{ value.gia_khuyen_mai }}</td>
+                                        <td class="align-middle text-center">
+                                        <td class="align-middle text-nowrap text-center">
+                                            <!-- <button class="btn btn-primary me-1" data-bs-toggle="modal"
+                                                data-bs-target="#updateModal">Cập Nhật</button> -->
+                                            <button class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal"
+                                                v-on:click="deleteProduct(value)">Xóa</button>
+                                        </td>
+                                        </td>
+                                    </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>
@@ -202,8 +204,39 @@
     </div>
 </template>
 <script>
+import baseRequest from '../../core/baseRequest';
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({ position: "top-right" });
 export default {
-
+    data() {
+        return {
+            list_products: [],
+        }
+    },
+    mounted() {
+        this.callProducts();
+    },
+    methods: {
+        callProducts() {
+            baseRequest
+                .get('select-san-pham/admin')
+                .then((res) => {
+                    this.list_products = res.data.data
+                })
+        },
+        deleteProduct(value) {
+            baseRequest
+                .post('xoa-san-pham/admin', value)
+                .then((res) => {
+                    if (res.data.status) {
+                        toaster.success('Thông Báo<br>' + res.data.message)
+                        this.callProducts();
+                    } else {
+                        toaster.error('Thông Báo<br>' + res.data.message)
+                    }
+                })
+        }
+    },
 }
 </script>
 <style></style>

@@ -17,7 +17,7 @@
                                 <th>Tổng Tiền Thanh Toán</th>
                                 <th>Thanh Toán</th>
                                 <th>Tình Trạng Đơn Hàng</th>
-                                <th>Chi TIết Đơn Hàng</th>
+                                <th>Xóa</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,15 +44,15 @@
                                             class="btn btn-success">Đã Giao</button>
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#chiTietModal">Chi Tiết Đơn Hàng</button>
+                                        <button v-on:click="deleteOrder(value)" class="btn btn-primary"
+                                            data-bs-toggle="modal" data-bs-target="#chiTietModal">Xóa Đơn Hàng</button>
                                     </td>
                                 </tr>
                             </template>
                         </tbody>
                     </table>
                 </div>
-                <div class="modal fade" id="chiTietModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <!-- <div class="modal fade" id="chiTietModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -146,6 +146,19 @@ export default {
                     if (res.data.status) {
                         toaster.success('Thông Báo<br>' + res.data.message)
                         this.callListProductOrderUser()
+                    } else {
+                        toaster.error('Thông Báo<br>' + res.data.message)
+                    }
+                })
+        },
+
+        deleteOrder(value) {
+            baserequest
+                .post('xoa-don-hang/admin', value)
+                .then((res) => {
+                    if (res.data.status) {
+                        toaster.success('Thông Báo<br>' + res.data.message)
+                        this.callListProductOrderUser();
                     } else {
                         toaster.error('Thông Báo<br>' + res.data.message)
                     }

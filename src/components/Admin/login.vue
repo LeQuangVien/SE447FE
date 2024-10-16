@@ -73,7 +73,7 @@ export default {
 .bgr {
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.5) 50%), url("https://img4.thuthuatphanmem.vn/uploads/2020/07/05/hinh-anh-background-nen-tim-hinh-khong-gian_034913582.jpg");
     width: 100%;
-    height: 700px;
+    height: 800px;
     background-size: cover;
     background-position: center;
 }

@@ -21,7 +21,7 @@
                                     <h5 class="product-title mb-0">
                                         <a href="product-detail.html" class="product-title-link">{{
                                             value.ten_san_pham
-                                            }}</a>
+                                        }}</a>
                                     </h5>
                                     <p class="product-p" style="text-align: justify;">{{ value.mo_ta_ngan }}</p>
                                 </div>
